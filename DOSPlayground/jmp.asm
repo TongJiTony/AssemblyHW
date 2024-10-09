@@ -27,7 +27,9 @@ INNER_LOOP:
     INT 21H                             ; Call DOS interrupt to print DL
 
     INC SI                              ; Move to the next character in MSG
-    LOOP INNER_LOOP                     ; Decrement CX and loop until CX = 0
+    DEC CX 
+    CMP CX, 0                           ; Decrement CX and loop until CX = 0
+    JG INNER_LOOP
 
     ; Print a newline character
     MOV AH, 02H                         ; DOS interrupt function 2 (print character)
@@ -37,7 +39,9 @@ INNER_LOOP:
     INT 21H                             ; Call DOS interrupt to print DL
 
     POP CX                              ; Restore CX for outer loop
-    LOOP OUTER_LOOP                     ; Decrement outer loop's CX and loop until CX = 0
+    DEC CX
+    CMP CX, 0
+    JG OUTER_LOOP                       ; Decrement outer loop's CX and loop until CX = 0
 
     MOV AX, 4C00H                       ; DOS function to terminate the program
     INT 21H                             ; Call interrupt to terminate
