@@ -1,9 +1,9 @@
 STKSEG SEGMENT STACK
-    buffer DB 5 DUP(0)   ; 缓冲区，最多能存储 4 位数字 + 终止符
+    buffer DB 5 DUP(0)
 STKSEG ENDS
 
-DATASEG SEGMENT                         ; Store string data
-    MSG DB "The sum of 1 to 100: $"     ; Alphabet string without end-of-string marker
+DATASEG SEGMENT                         
+    MSG DB "The sum of 1 to 100: $"     
 DATASEG ENDS
 
 Zixun SEGMENT                           ; Code segment
