@@ -9,62 +9,51 @@ PRINTSEG SEGMENT
 MAIN PROC
 
 print_table PROC FAR
-    mov dx,0	
-	mov ax,0007h		
+    mov dx,0
 	mov bp,0		;bp确定table中的位置信息（行）
 	mov cx,21		;循环21次
-L1:
+print_line:
 	push cx			;循环次数
-	push dx			;行列信息
-	push ax			;字体属性
+	push dx			
+	push ax		
 
 	call str_ini		;中间栈初始化
 
 	mov ax,str
 	mov es,ax		;str字符串的段地址
+
 	mov cx,4
 	mov si,0
 Years:
 	mov al,ds:[bp+si]
 	mov es:[si],al
 	inc si
-	loop Years	;将年份信息复制到str中
-	pop cx			;字体
-	pop dx			;行列
+	loop Years			;将年份信息复制到str中
+
+	pop cx			
+	pop dx				
 	call show_str		;显示年份
 
 	call str_ini
 	add dl,8		;列数+8
-	push dx
-	push cx
 	mov ax,ds:[bp+5]
 	mov dx,ds:[bp+7]
-	call Dtoc		;将summ数值转成字符串存放在str中
-	pop cx
-	pop dx
-	call show_str		;显示summ
+	call Dtoc			;将收入数值转成字符串存放在str中
+	call show_str		;显示收入
 
 	call str_ini
 	add dl,8
-	push dx
-	push cx
 	mov dx,0
 	mov ax,ds:[bp+0ah]
 	call Dtoc
-	pop cx
-	pop dx
-	call show_str		;显示ne
+	call show_str		;显示人数
 
 	call str_ini
 	add dl,8
-	push dx
-	push cx
 	mov dx,0
 	mov ax,ds:[bp+0dh]
 	call Dtoc
-	pop cx
-	pop dx
-	call show_str	        ;显示平均值
+	call show_str	    ;显示平均值
 
 	;一行所有信息显示完后打印回车
     MOV AH, 02H                         ; DOS interrupt function 2 (print character)
@@ -78,7 +67,7 @@ Years:
 	inc dh			;行数+1
 	mov dl,0		;列数设为0
 	pop cx			;循环次数出栈
-	loop L1
+	loop print_line
 	ret
 print_table ENDP
 
@@ -99,6 +88,9 @@ Divdw endp
         
 ;将16进制数转成10进制数的字符形式, 存放在str段中
 Dtoc proc
+	push cx
+	push dx
+
     push ds
 	mov bx,str
 	mov ds,bx
@@ -123,6 +115,9 @@ Dtoc_s1:
 	inc si
 	loop Dtoc_s1
 	pop ds
+
+	pop dx
+	pop cx
 	ret
 Dtoc endp
         
