@@ -1,3 +1,7 @@
+STKSEG SEGMENT STACK
+    DW 32 DUP(0)
+STKSEG ENDS
+
 DATASEG SEGMENT
     db '1975', '1976', '1977', '1978', '1979', '1980', '1981', '1982', '1983' 
     db '1984', '1985', '1986', '1987', '1988', '1989', '1990', '1991', '1992' 
@@ -27,10 +31,9 @@ start:
     mov ds, ax
     mov ax, TABLESEG
     mov es, ax
+
     call fill_table
 
-    mov ax, TABLESEG
-    mov ds, ax
     call print_table
 
     mov ax,4c00h
