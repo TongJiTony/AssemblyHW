@@ -20,7 +20,7 @@ DATASEG ENDS
 
 MENUSEG SEGMENT
 	greeting DB "Merry Christmas! Let's make a Christmas Tree~ $"
-	MSG DB "Please input your lucky number(maximum 9 chars): $"
+	MSG DB "Please input your lucky number(maximum 8 chars): $"
 	respond DB "Your lucky number is: $"
     CRLF db 13,10,'$'                   
     input_buffer    db 10
